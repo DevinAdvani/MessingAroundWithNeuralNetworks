@@ -1,2 +1,2 @@
-# NeuralNetworksFromScratch
-experimental project
+# MessingAroundWithNeuralNetworks
+It's in the name.
