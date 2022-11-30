@@ -1,4 +1,4 @@
 import numpy as np
-from test import *
+from brain import *
 
 print(function(5))
