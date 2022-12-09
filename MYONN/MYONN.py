@@ -1,4 +1,5 @@
 #Make your own neural network tutorial
+#for training sets read book and opy as too big to upload
 
 import numpy as np
 import scipy.special as sp
