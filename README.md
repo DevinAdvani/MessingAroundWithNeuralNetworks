@@ -1,5 +1,5 @@
 # MessingAroundWithNeuralNetworks
 
-* Free Code Camp Reinforcement Learning Snake
 * Make Your Own Neural Network - use datasets from book
-*  Project 1
+* Free Code Camp Reinforcement Learning Snake - didn't work as couldn't work out plug ins
+*  Project 1 - snake with just numpy
