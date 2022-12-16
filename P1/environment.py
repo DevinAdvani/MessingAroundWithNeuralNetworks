@@ -1,28 +1,77 @@
 import numpy as np
+import random
 
 # settings
 rows = 10
 columns = 10
-x = 0
-y = 0
-
+snake_x = [0]
+snake_y = [0]
+food_x = random.randint(0,rows-1)
+food_y = random.randint(0,columns-1)
+environment = np.zeros((rows,columns))
+environment[food_y][food_x] = 1
+environment[snake_y[0]][snake_x[0]] = 2
+length = 1 # length is equivalent to the score
 
 # game cycle
 while True:
-    environment = np.zeros((rows,columns))
-    environment[y][x] = 1
-    print(environment)
+    print(environment) # print matrix
     print("""PRESS
 [1] - UP
 [2] - RIGHT
 [3] - DOWN
 [4] - LEFT""")
-    choice = input("INPUT: ")
-    if choice == "1" and y != 0:
-        y -= 1
-    elif choice == "2" and x != columns-1:
-        x += 1
-    elif choice == "3" and y != rows-1:
-        y += 1
-    elif choice == "4" and x != 0:
-        x -= 1
+    choice = input("INPUT: ") # input
+    
+    environment[snake_y[0]][snake_x[0]] = 0 # change the snake xy list
+    if choice == "1":
+        snake_y.insert(0,snake_y[0]-1)
+        snake_x.insert(0,snake_x[0])
+    elif choice == "2":
+        snake_x.insert(0,snake_x[0]+1)
+        snake_y.insert(0,snake_y[0])
+    elif choice == "3":
+        snake_y.insert(0,snake_y[0]+1)
+        snake_x.insert(0,snake_x[0])
+    elif choice == "4":
+        snake_x.insert(0,snake_x[0]-1)
+        snake_y.insert(0,snake_y[0])
+    environment[snake_y[-1]][snake_x[-1]] = 0
+    del snake_x[-1]
+    del snake_y[-1]
+    
+    
+    if snake_y[0] == -1 or snake_x[0] == -1 or snake_x[0] == columns or snake_y[0] == rows: # if bump into sides end game
+        print("GAME OVER")
+        print(length)
+        exit()
+        
+    for i in range(1,len(snake_y)): # if bump into itself end game
+        if snake_x[0] == snake_x[i] and snake_y[0] == snake_y[i]:
+            print("GAME OVER")
+            print(length)
+            exit()
+            
+    for i in range(0,len(snake_y)): # adding next parts of the snake
+        environment[snake_y[i]][snake_x[i]] = i+2
+        
+    def check(x,y,x_list,y_list): # function to check whether the food will generate in the snakes body
+        for i in range(0,len(y_list)):
+            if y == y_list[i]:
+                if x == x_list[i]:
+                    return True 
+        else:
+            return False
+                    
+    
+    if snake_x[0] == food_x and snake_y[0] == food_y: # eating food and generating new ones
+        length += 1
+        food_x = random.randint(0,rows-1)
+        food_y = random.randint(0,columns-1)
+        while check(food_x,food_y,snake_x,snake_y):
+            food_x = random.randint(0,rows-1)
+            food_y = random.randint(0,columns-1)
+        environment[food_y][food_x] = 1
+        snake_y.append(0)
+        snake_x.append(0)
+    
