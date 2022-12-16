@@ -1,7 +1,7 @@
 import numpy as np
 import random
 
-# settings
+# settings test
 rows = 10
 columns = 10
 snake_x = [0]
